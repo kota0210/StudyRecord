@@ -26,21 +26,21 @@ public class StudyRecordController {
     public String list(Model model) {
         List<StudyRecord> studyRecords = studyRecordService.findAll();
         model.addAttribute("studyRecords", studyRecords);
-        return "tasks/list";
+        return "StudyRecordList";
     }
 
     // 登録フォーム表示
     @GetMapping("/new")
     public String showForm(Model model) {
         model.addAttribute("studyRecord", new StudyRecord());
-        return "tasks/form";
+        return "StudyRecordResister";
     }
 
     // 登録処理
     @PostMapping
     public String create(@ModelAttribute StudyRecord studyRecord) {
         studyRecordService.save(studyRecord);
-        return "redirect:/tasks";
+        return "redirect:/study-records";
     }
     
 }

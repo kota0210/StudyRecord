@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>学習記録登録画面</title>
@@ -7,33 +7,33 @@
 </head>
 <body>
         <h1>学習記録登録画面</h1>
-        <form action="/form.php" method="post">
+        <form th:action="@{/study-records}" th:object="${studyRecord}" method="post">
             <!-- タイトル -->
             <div>
                 <label for="title">タイトル:</label>
-                <input type="text" id="title" name="title">
+                <input type="text" id="title" name="title" th:field="*{title}">
             </div>
 
             <!-- 学習内容 -->
             <div>
                 <label for="content">学習内容:</label>
-                <input type="text" id="content" name="content">
+                <input type="text" id="content" name="content" th:field="*{content}">
             </div>
 
             <!-- 学習日 -->
              <label for="date">学習日:</label>
-             <input type="date" id="date" name="date">
+             <input type="date" id="date" name="date" th:field="*{date}">
 
             <!-- 学習時間 -->
              <div>
                 <label for="durationMinutes">学習時間（分単位）:</label>
-                <input type="number" step ="1" min="1" max="600" id="durationMinutes" name="durationMinutes">
+                <input type="number" step ="1" min="1" max="600" id="durationMinutes" name="durationMinutes" th:field="*{durationMinutes}">
             </div>
 
             <!-- カテゴリ -->
              <div>
                 <label for="category">カテゴリ:</label>
-                <input type="text" id="category" name="category">
+                <input type="text" id="category" name="category" th:field="*{category}">
             </div>
 
             <!-- 登録ボタン -->
