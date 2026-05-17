@@ -12,6 +12,7 @@ import com.example.demo.studyrecord.repository.StudyRecordRepository;
 public class StudyRecordService {
     private final StudyRecordRepository studyRecordRepository;
     
+    // コンストラクタで学習記録リポジトリを注入
     public StudyRecordService(StudyRecordRepository studyRecordRepository){
         this.studyRecordRepository = studyRecordRepository;
     }
@@ -25,5 +26,13 @@ public class StudyRecordService {
     public List<StudyRecord> findAll() {
         return studyRecordRepository.findAll();
     }
+
+    // 詳細取得
+
+    // 更新
+
+    // 削除
+
+    // カテゴリー別の学習記録の取得
     
 }
