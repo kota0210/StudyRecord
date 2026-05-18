@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学習記録編集画面</title>
+</head>
+<body>
+    <h1>学習記録編集画面</h1>
+    <a th:href="@{/study-records}">一覧に戻る</a>
+    <form th:action="@{/study-records/{id}(id=${studyRecord.id})}" method="post">
+        <input type="hidden" th:object="${studyRecord}" th:field="*_method" value="put" />
+        <div>
+            <label for="title">タイトル:</label>
+            <input type="text" id="title" name="title" th:value="${studyRecord.title}" required />
+        </div>
+        <div>
+            <label for="content">学習内容:</label>
+            <textarea id="content" name="content" required th:text="${studyRecord.content}"></textarea>
+        </div>
+        <div>
+            <label for="date">学習日:</label>
+            <input type="date" id="date" name="date" th:value="${studyRecord.date}" required />
+        </div>
+        <div>
+            <label for="durationMinutes">学習時間（分）:</label>
+            <input type="number" id="durationMinutes" name="durationMinutes" th:value="${studyRecord.durationMinutes}" required />
+        </div>
+        <div>
+            <label for="category">カテゴリ:</label>
+            <select id="category" name="category">
+                <!-- カテゴリの選択肢をここに追加する -->
+                <option th:each="category : ${categories}" th:value="${category.name}" th:text="${category.name}" th:selected="${category.name == studyRecord.category}"></option>
+            </select>
+        </div>
+        <button type="submit">更新</button>
+    </form>
+</body>
+</html>
