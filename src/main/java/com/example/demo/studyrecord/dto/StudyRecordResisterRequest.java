@@ -17,7 +17,7 @@ public class StudyRecordResisterRequest {
 
     // 内容
     @Size(max = 1000, message = "1000文字以内で入力してください。")
-    private String Content;
+    private String content;
 
     // 学習日
     @NotBlank(message = "学習日を入力してください。")

@@ -46,17 +46,17 @@ public class StudyRecordController {
     // 詳細取得
 
     // 更新
-    @GetMapping("/{id}/edit")
-    public String showEditForm(@PathVariable Long id, Model model) {
-        StudyRecord studyRecord = studyRecordService.findById(id);
-        model.addAttribute("studyRecord", studyRecord);
-        return "StudyRecordEdit";
-    }
+    // @GetMapping("/{id}/edit")
+    // public String showEditForm(@PathVariable Long id, Model model) {
+    //     StudyRecord studyRecord = studyRecordService.findById(id);
+    //     model.addAttribute("studyRecord", studyRecord);
+    //     return "StudyRecordEdit";
+    // }
 
-    // 削除
-    @PostMapping("/{id}/delete")
-    public String delete(@PathVariable Long id) {
-        studyRecordService.deleteById(id);
-        return "redirect:/study-records";
-    }
+    // // 削除
+    // @PostMapping("/{id}/delete")
+    // public String delete(@PathVariable Long id) {
+    //     studyRecordService.deleteById(id);
+    //     return "redirect:/study-records";
+    // }
 }
