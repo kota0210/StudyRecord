@@ -1,15 +1,18 @@
 package com.example.demo.studyrecord.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.studyrecord.entity.StudyRecord;
+import com.example.demo.studyrecord.repository.StudyRecordRepository;
 import com.example.demo.studyrecord.service.StudyRecordService;
 
 @Controller
@@ -45,13 +48,20 @@ public class StudyRecordController {
 
     // 詳細取得
 
-    // 更新
-    // @GetMapping("/{id}/edit")
-    // public String showEditForm(@PathVariable Long id, Model model) {
-    //     StudyRecord studyRecord = studyRecordService.findById(id);
-    //     model.addAttribute("studyRecord", studyRecord);
-    //     return "StudyRecordEdit";
-    // }
+    /// 更新
+    @GetMapping("/{id}/edit")
+    public String showEditForm(@PathVariable Long id, Model model) {
+         Optional<StudyRecord> studyRecord;
+         try {
+            studyRecord = StudyRecordRepository.findById(id);
+         } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            studyRecord = Optional.empty();
+         }
+         model.addAttribute("studyRecord", studyRecord);
+         return "StudyRecordEdit";
+     }
 
     // // 削除
     // @PostMapping("/{id}/delete")
