@@ -49,24 +49,18 @@ public class StudyRecordController {
     // 詳細取得
 
     /// 更新
-    @GetMapping("/{id}/edit")
+    @PostMapping("/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model) {
-         Optional<StudyRecord> studyRecord;
-         try {
-            studyRecord = StudyRecordRepository.findById(id);
-         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            studyRecord = Optional.empty();
-         }
+        Long loginUserId = 1L;
+            StudyRecord studyRecord = studyRecordService.update(id, model);
          model.addAttribute("studyRecord", studyRecord);
          return "StudyRecordEdit";
      }
 
     // // 削除
-    // @PostMapping("/{id}/delete")
-    // public String delete(@PathVariable Long id) {
-    //     studyRecordService.deleteById(id);
-    //     return "redirect:/study-records";
-    // }
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable Long id ,Model model) {
+         studyRecordService.delete(id, model);
+         return "redirect:/study-records";
+     }
 }
