@@ -31,13 +31,24 @@ public class StudyRecordService {
 
     // 詳細取得
 
-    // 更新・・・学習記録編集画面にて編集した内容をIDにて更新する
-    public StudyRecord update(@PathVariable Long id, Model model) {
-        StudyRecord studyRecord = studyRecordRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid study record ID: " + id));
 
-        studyRecordRepository.save(studyRecord);
-         model.addAttribute("studyRecord", studyRecord);
-         return studyRecord;
+    // 編集画面の表示
+    public StudyRecord findByIdAndUserId(Long userId, Long id) {
+        return studyRecordRepository.findByIdAndUserId(id, userId)
+                .orElseThrow(() -> new IllegalArgumentException("学習記録はまだ登録されていません。"));
+    }
+
+    // 更新・・・学習記録編集画面にて編集した内容をIDにて更新する
+    public StudyRecord update(Long id, StudyRecord editedRecord, Long userId) {
+        StudyRecord studyRecord = studyRecordRepository.findByIdAndUserId(id, userId)
+            .orElseThrow(() -> new IllegalArgumentException("学習記録が見つかりません"));
+
+        studyRecord.setStudyDate(editedRecord.getStudyDate());
+        studyRecord.setDurationMinutes(editedRecord.getDurationMinutes());
+        studyRecord.setContent(editedRecord.getContent());
+        studyRecord.setMemo(editedRecord.getMemo());
+
+        return studyRecordRepository.save(studyRecord);
     }
     
     // 削除

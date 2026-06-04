@@ -51,6 +51,38 @@ public class StudyRecord {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    public LocalDate getStudyDate() {
+    return studyDate;
+}
+
+public void setStudyDate(LocalDate studyDate) {
+    this.studyDate = studyDate;
+}
+
+public Integer getDurationMinutes() {
+    return durationMinutes;
+}
+
+public void setDurationMinutes(Integer durationMinutes) {
+    this.durationMinutes = durationMinutes;
+}
+
+public String getContent() {
+    return content;
+}
+
+public void setContent(String content) {
+    this.content = content;
+}
+
+public String getMemo() {
+    return memo;
+}
+
+public void setMemo(String memo) {
+    this.memo = memo;
+}
+
     @PrePersist
     public void prePersist() {
         LocalDateTime now = LocalDateTime.now();

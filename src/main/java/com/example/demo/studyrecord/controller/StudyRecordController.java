@@ -16,7 +16,7 @@ import com.example.demo.studyrecord.repository.StudyRecordRepository;
 import com.example.demo.studyrecord.service.StudyRecordService;
 
 @Controller
-@RequestMapping("/StudyRecord")
+@RequestMapping("/study-records")
 public class StudyRecordController {
     private final StudyRecordService studyRecordService;
 
@@ -36,7 +36,7 @@ public class StudyRecordController {
     @GetMapping("/new")
     public String showForm(Model model) {
         model.addAttribute("studyRecord", new StudyRecord());
-        return "StudyRecordResister";
+        return "StudyRecordRegister";
     }
 
     // 登録処理
@@ -48,17 +48,29 @@ public class StudyRecordController {
 
     // 詳細取得
 
+    // 編集フォームの表示
+    @GetMapping("/{id}/edit")
+    public String showEditForm(@PathVariable Long id, Model model){
+        Long loginUserId = 1l;
+
+        StudyRecord studyRecord = studyRecordService.findByIdAndUserId(loginUserId, id);
+
+        model.addAttribute("studyRecord", studyRecord);
+        
+        return "StudyRecordEdit";
+    }
+
     /// 更新
     @PostMapping("/{id}/edit")
-    public String showEditForm(@PathVariable Long id, Model model) {
+    public String update(@PathVariable Long id, @ModelAttribute StudyRecord studyRecord) {
         Long loginUserId = 1L;
-            StudyRecord studyRecord = studyRecordService.update(id, model);
-         model.addAttribute("studyRecord", studyRecord);
-         return "StudyRecordEdit";
+        studyRecordService.update(id, studyRecord,  loginUserId);
+
+        return "redirect:/study-records";
      }
 
     // // 削除
-    @PostMapping("/{id}/delete")
+    @GetMapping("/{id}/delete")
     public String delete(@PathVariable Long id ,Model model) {
          studyRecordService.delete(id, model);
          return "redirect:/study-records";
