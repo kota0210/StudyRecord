@@ -2,10 +2,39 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>ログイン画面</title>
+    <title>カテゴリ一覧</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <h1>カテゴリ一覧</h1>
+
+<a th:href="@{/study-records/new}">新規登録</a>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>タイトル</th>
+            <th>学習内容</th>
+            <th>学習日</th>
+            <th>学習時間</th>
+            <th>カテゴリ</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="studyRecord : ${studyRecords}">
+            <td th:text="${studyRecord.title}"></td>
+            <td th:text="${studyRecord.content}"></td>
+            <td th:text="${studyRecord.date}"></td>
+            <td th:text="${studyRecord.durationMinutes}"></td>
+            <td th:text="${studyRecord.category}"></td>
+            <!-- ここに編集・削除ボタンを作成する -->
+            <td>
+                <a th:href="@{/study-records/{id}/edit(id=${studyRecord.id})}">編集</a>
+                <a th:href="@{/study-records/{id}/delete(id=${studyRecord.id})}" onclick="return confirm('本当に削除しますか？')">削除</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 </body>
 </html>

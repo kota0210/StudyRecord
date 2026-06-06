@@ -33,6 +33,9 @@ public class StudyRecord {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @Column(nullable = false, length = 50)
+    private String title;
+
     @Column(name = "study_date", nullable = false)
     LocalDate studyDate;
 
