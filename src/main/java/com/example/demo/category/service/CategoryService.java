@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.category.entity.Category;
 import com.example.demo.category.repository.CategoryRepository;
+import com.example.demo.user.entity.User;
 
 @Service
 public class CategoryService {
@@ -17,7 +18,21 @@ public class CategoryService {
     }
 
     // カテゴリの登録
-    public void save(Category category){
+    public void create(User user, String name){
+        String trimedName = name.trim();
+        if(trimedName.isEmpty()){
+            throw new IllegalArgumentException("カテゴリ名を入力してください。");
+        }
+
+        if(categoryRepsitory.existsByUserIdAndName(user.getId(), trimedName)){
+            throw new IllegalArgumentException("同じ名前のカテゴリは既に存在しています。");
+            
+        }
+
+        Category category = Category.builder()
+                                    .user(user)
+                                    .name(trimedName)
+                                    .build();
         categoryRepsitory.save(category);
     }
 

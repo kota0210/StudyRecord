@@ -28,10 +28,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Category {
+    // カテゴリID
     @Id
+    // テーブルのidentity列を利用して、主キーを生成
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    // ユーザーID
+    // 多対一の関係を定義し、ユーザーエンティティと結合
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

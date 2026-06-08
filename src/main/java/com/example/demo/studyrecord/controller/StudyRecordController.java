@@ -1,7 +1,6 @@
 package com.example.demo.studyrecord.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.studyrecord.entity.StudyRecord;
-import com.example.demo.studyrecord.repository.StudyRecordRepository;
 import com.example.demo.studyrecord.service.StudyRecordService;
 
 @Controller
