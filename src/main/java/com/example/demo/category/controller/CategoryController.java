@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.category.repository.CategoryRepository;
 
 @Controller
-@RequestMapping("/Category")
+@RequestMapping("/categories")
 public class CategoryController {
     private final CategoryRepository categoryRepository;
 

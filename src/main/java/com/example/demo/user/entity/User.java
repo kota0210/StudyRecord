@@ -52,4 +52,9 @@ public class User {
         this.password = password;
     }
 
+    public Long getId() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getId'");
+    }
+
 }
