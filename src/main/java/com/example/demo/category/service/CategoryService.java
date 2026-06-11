@@ -37,7 +37,7 @@ public class CategoryService {
     }
 
     // カテゴリの一覧表示・・・ユーザーIDからカテゴを絞り込む
-    public List<Category> findAllByUserID(Long userId){
+    public List<Category> findAllByUserId(Long userId){
         return categoryRepository.findAllByUserIdOrderByCreatedAtAsc(userId);
     }
 
