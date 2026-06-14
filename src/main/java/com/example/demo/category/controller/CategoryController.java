@@ -4,6 +4,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,6 +38,19 @@ public class CategoryController {
             categoryService.create(loginUser.getUser(), name);
             redirectAttributes.addFlashAttribute("successMessage","カテゴリを登録しました。");
         } catch(IllegalArgumentException e){
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+
+        return "redirect:/categories";
+    }
+
+    // 更新
+    @PostMapping("/{id}/update")
+    public String update(@PathVariable Long id, @RequestParam String name, @AuthenticationPrincipal LoginUserDetails loginUser, RedirectAttributes redirectAttributes){
+        try{
+            categoryService.update(id, loginUser.getUser().getId(), name);
+            redirectAttributes.addFlashAttribute("successMessage", "カテゴリを更新しました。");
+        }catch(IllegalArgumentException e){
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
 
