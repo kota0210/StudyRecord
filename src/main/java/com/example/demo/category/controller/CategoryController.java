@@ -56,4 +56,17 @@ public class CategoryController {
 
         return "redirect:/categories";
     }
+
+    // 削除
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable Long id, @AuthenticationPrincipal LoginUserDetails loginUser, RedirectAttributes redirectAttributes){
+        try{
+            categoryService.delete(id, loginUser.getUser().getId());
+            redirectAttributes.addFlashAttribute("successMessage", "カテゴリを削除しました。");
+        }catch(IllegalArgumentException e){
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+
+        return "redirect:/categories";
+    }
 }
