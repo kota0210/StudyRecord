@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.example.demo.studyrecord.entity.StudyRecord;
 import com.example.demo.studyrecord.repository.StudyRecordRepository;
 
+
 // 学習記録の登録と一覧表示のための機能
 @Service
 public class StudyRecordService {
     private final StudyRecordRepository studyRecordRepository;
-    
-    // コンストラクタで学習記録リポジトリを注入
+
+
+    // コンストラクタで学習記録リポジトリとパスワードエンコーダー（パスワードをハッシュ化する）を注入
     public StudyRecordService(StudyRecordRepository studyRecordRepository){
         this.studyRecordRepository = studyRecordRepository;
     }

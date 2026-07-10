@@ -26,6 +26,12 @@ public class User {
     @Column(nullable = false, length = 255)
     private String password;
 
+    @Column(nullable = false, length = 255)
+    private String role = "ROLE_USER";
+
+    @Column(nullable = false, length = 255)
+    private boolean enabled = true;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
@@ -48,8 +54,20 @@ public class User {
         this.name = name;
     }
 
-    public void updatePassword(String password){
+    public void setEmail(String email){
+        this.email = email;
+    }
+
+    public void setPassword(String password){
         this.password = password;
+    }
+
+    public void setRole(String role){
+        this.role = role;
+    }
+
+    public void setEnabled(boolean enabled){
+        this.enabled = enabled;
     }
 
     public Long getId() {
