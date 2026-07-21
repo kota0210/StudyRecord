@@ -36,10 +36,15 @@ private final UserRegisterService userRegisterService;
         }
 
         // ユーザーを登録
+        try{
+            userRegisterService.registerUser(email, password);
+            return "redirect:/login?registerSuccess";
 
-
-
-        return "register";
+        }catch(IllegalArgumentException e){
+            model.addAttribute("registerError", e.getMessage());
+            model.addAttribute("email", email);
+            return "register";
+        }
     }
 
 
