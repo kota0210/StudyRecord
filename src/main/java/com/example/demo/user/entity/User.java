@@ -58,16 +58,32 @@ public class User {
         this.email = email;
     }
 
+        public String getEmail(){
+        return this.email;
+    }
+
     public void setPassword(String password){
         this.password = password;
+    }
+
+    public String getPassword(){
+        return this.password;
     }
 
     public void setRole(String role){
         this.role = role;
     }
 
+    public String getRole(){
+        return this.role;
+    }
+
     public void setEnabled(boolean enabled){
         this.enabled = enabled;
+    }
+
+    public boolean getEnabled(){
+        return this.enabled;
     }
 
     public Long getId() {
