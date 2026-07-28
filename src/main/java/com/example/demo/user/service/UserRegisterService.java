@@ -1,10 +1,12 @@
 package com.example.demo.user.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.user.entity.User;
 import com.example.demo.user.repository.UserRepository;
 
+@Service
 public class UserRegisterService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
