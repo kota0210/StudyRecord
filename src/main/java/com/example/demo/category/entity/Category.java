@@ -39,4 +39,5 @@ public class Category {
             this.createdAt = LocalDateTime.now();
         }
     }
+
 }
