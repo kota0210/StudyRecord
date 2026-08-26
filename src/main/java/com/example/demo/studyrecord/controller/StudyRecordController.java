@@ -31,11 +31,11 @@ public class StudyRecordController {
     }
 
     // 登録フォーム表示
-    @GetMapping("/new")
-    public String showForm(Model model) {
-        model.addAttribute("studyRecord", new StudyRecord());
-        return "StudyRecordRegister";
-    }
+     @GetMapping("/new")
+     public String showForm(Model model) {
+         model.addAttribute("studyRecord", new StudyRecord());
+         return "StudyRecordRegister";
+     }
 
     // 登録処理
     @PostMapping

@@ -16,13 +16,18 @@
         </div>
 
         <div>
+            <label>名前</label>
+            <input type="text" name="name" th:value="${name}" required>
+        </div>
+
+        <div>
             <label>パスワード</label>
             <input type="password" name="password" required>
         </div>
 
         <div>
             <label>パスワード確認</label>
-            <input type="password" name="passwordConfirm" required>
+            <input type="password" name="confirmPassword" required>
         </div>
 
         <button type="submit">登録</button>

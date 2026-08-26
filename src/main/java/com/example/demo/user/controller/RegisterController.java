@@ -21,31 +21,60 @@ public class RegisterController {
     // 登録フォームの表示
     @GetMapping
     public String showRegisterForm() {
-        return "register";
+        return "UserRegister";
     }
 
     // 登録処理
     @PostMapping
     public String registerUser(
             @RequestParam String email,
+            @RequestParam String name,
             @RequestParam String password,
             @RequestParam String confirmPassword,
             Model model
     ) {
-        // 確認用パスワードとの一致を確認
-        if (!password.equals(confirmPassword)) {
-            model.addAttribute("registerError", "入力した2つのパスワードが一致しません。");
-            model.addAttribute("email", email);
-            return "register";
-        }
+        // // 確認用パスワードとの一致を確認
+        // if (!password.equals(confirmPassword)) {
+        //     model.addAttribute("registerError", "入力した2つのパスワードが一致しません。");
+        //     model.addAttribute("email", email);
+        //     return "UserRegister";
+        // }
+
+        // try {
+        //     userRegisterService.registerUser(email, password);
+        //     return "redirect:/login?registered";
+        // } catch (IllegalArgumentException e) {
+        //     model.addAttribute("registerError", e.getMessage());
+        //     model.addAttribute("email", email);
+        //     return "UserRegister";
+        // }
+
+        System.out.println("===== /register POST に到達しました =====");
+        System.out.println("email = " + email);
 
         try {
-            userRegisterService.registerUser(email, password);
+            if (!password.equals(confirmPassword)) {
+                model.addAttribute("registerError", "入力した2つのパスワードが一致しません。");
+                model.addAttribute("name", name);
+                model.addAttribute("email", email);
+                return "UserRegister";
+            }
+
+            userRegisterService.registerUser(name,email, password);
+
+            System.out.println("===== ユーザー登録成功 =====");
+
             return "redirect:/login?registered";
-        } catch (IllegalArgumentException e) {
-            model.addAttribute("registerError", e.getMessage());
+
+        } catch (Exception e) {
+            System.out.println("===== ユーザー登録で例外発生 =====");
+            e.printStackTrace();
+
+            model.addAttribute("registerError", "登録処理でエラーが発生しました: " + e.getClass().getSimpleName() + " / " + e.getMessage());
+            model.addAttribute("name", name);
             model.addAttribute("email", email);
-            return "register";
+
+            return "UserRegister";
         }
     }
 }

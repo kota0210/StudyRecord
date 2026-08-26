@@ -87,8 +87,11 @@ public class User {
     }
 
     public Long getId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getId'");
+        return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

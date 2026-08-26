@@ -16,6 +16,10 @@
 
     <hr>
 
+    <form th:action = "@{/study-records}" method = "get">
+        <button type = "submit">学習記録を表示</button>
+    </form>
+
     <form th:action="@{/logout}" method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <button type="submit">ログアウト</button>

@@ -17,8 +17,11 @@ public class UserRegisterService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void registerUser(String email, String password){
+    public void registerUser(String name, String email, String password){
 
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException("名前を入力してください。");
+        }
         if(email == null || email.isEmpty()){
             throw new IllegalArgumentException("メールアドレスを入力してください。");
         }
@@ -31,6 +34,7 @@ public class UserRegisterService {
         }
         
         User user = new User();
+        user.setName(name);
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         user.setRole("ROLE_USER");
