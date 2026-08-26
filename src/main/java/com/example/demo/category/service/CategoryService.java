@@ -18,19 +18,19 @@ public class CategoryService {
     }
 
     // カテゴリの登録
-    public void create(User user, String name){
+    public void create(Long userId, String name){
         String trimedName = name.trim();
         if(trimedName.isEmpty()){
             throw new IllegalArgumentException("カテゴリ名を入力してください。");
         }
 
-        if(categoryRepository.existsByUserIdAndName(user.getId(), trimedName)){
+        if(categoryRepository.existsByUserIdAndName(userId, trimedName)){
             throw new IllegalArgumentException("同じ名前のカテゴリは既に存在しています。");
             
         }
 
         Category category = Category.builder()
-                                    .user(user)
+                                    .userId(userId)
                                     .name(trimedName)
                                     .build();
         categoryRepository.save(category);

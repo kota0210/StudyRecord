@@ -20,6 +20,10 @@
         <button type = "submit">学習記録を表示</button>
     </form>
 
+    <form th:action = "@{/categories}" method = "get">
+        <button type = "submit">登録したカテゴリを表示</button>
+    </form>
+
     <form th:action="@{/logout}" method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <button type="submit">ログアウト</button>

@@ -24,7 +24,7 @@
         <tr th:each="studyRecord : ${studyRecords}">
             <td th:text="${studyRecord.title}"></td>
             <td th:text="${studyRecord.content}"></td>
-            <td th:text="${studyRecord.date}"></td>
+            <td th:text="${studyRecord.studyDate}"></td>
             <td th:text="${studyRecord.durationMinutes}"></td>
             <td th:text="${studyRecord.category}"></td>
             <!-- ここに編集・削除ボタンを作成する -->
