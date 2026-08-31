@@ -30,11 +30,16 @@
                 <input type="number" step ="1" min="1" max="600" id="durationMinutes" name="durationMinutes" th:field="*{durationMinutes}">
             </div>
 
-            <!-- カテゴリ -->
-             <div>
-                <label for="category">カテゴリ:</label>
-                <input type="text" id="category" name="category" th:field="*{category}">
-            </div>
+            <div>
+        <label for="categoryId">カテゴリ:</label>
+        <select id="categoryId" name="categoryId" required>
+            <option value="">選択してください</option>
+            <option th:each="category : ${categories}"
+                    th:value="${category.id}"
+                    th:text="${category.name}">
+            </option>
+        </select>
+    </div>
 
             <!-- 登録ボタン -->
             <input type="submit" value="登録">

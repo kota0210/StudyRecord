@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    List<Category> findAllByUserIdOrderByCreatedAtAsc(Long userId);
-    Optional<Category> findByIdAndUserId(Long id, Long userId);
-    boolean existsByUserIdAndName(Long userId, String name);
+    List<Category> findAllByUser_IdOrderByCreatedAtAsc(Long userId);
+
+    Optional<Category> findByIdAndUser_Id(Long categoryId, Long userId);
+
+    boolean existsByUser_IdAndName(Long userId, String name);
 }

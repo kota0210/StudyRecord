@@ -6,23 +6,35 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.example.demo.category.entity.Category;
+import com.example.demo.category.repository.CategoryRepository;
 import com.example.demo.studyrecord.entity.StudyRecord;
 import com.example.demo.studyrecord.repository.StudyRecordRepository;
+import com.example.demo.user.entity.User;
+
+import jakarta.transaction.Transactional;
 
 
 // 学習記録の登録と一覧表示のための機能
 @Service
+@Transactional
 public class StudyRecordService {
     private final StudyRecordRepository studyRecordRepository;
+    private final CategoryRepository categoryRepository;
 
 
     // コンストラクタで学習記録リポジトリとパスワードエンコーダー（パスワードをハッシュ化する）を注入
-    public StudyRecordService(StudyRecordRepository studyRecordRepository){
+    public StudyRecordService(StudyRecordRepository studyRecordRepository, CategoryRepository categoryRepository){
         this.studyRecordRepository = studyRecordRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     // 学習記録の登録
-    public void save(StudyRecord studyRecord) {
+    public void save(StudyRecord studyRecord, User user, Long categoryId) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new IllegalArgumentException("カテゴリが見つかりません"));
+        studyRecord.setCategory(category);
+        studyRecord.setUser(user);
         studyRecordRepository.save(studyRecord);
     }
 

@@ -4,7 +4,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo.category.entity.Category;
 import com.example.demo.category.security.LoginUserDetails;
 import com.example.demo.category.service.CategoryService;
-import com.example.demo.studyrecord.entity.StudyRecord;
 
 @Controller
 @RequestMapping("/categories")
@@ -39,7 +37,7 @@ public class CategoryController {
     @PostMapping
     public String create(@RequestParam String name, @AuthenticationPrincipal LoginUserDetails loginUser, RedirectAttributes redirectAttributes){
         try{
-            categoryService.create(loginUser.getUser().getId(), name);
+            categoryService.create(loginUser.getUser(), name);
             redirectAttributes.addFlashAttribute("successMessage","カテゴリを登録しました。");
         } catch(IllegalArgumentException e){
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
@@ -55,17 +53,6 @@ public class CategoryController {
          return "CategoryRegister";
      }
 
-    // 登録処理
-    @PostMapping
-    public String create(@ModelAttribute Category category, @AuthenticationPrincipal LoginUserDetails loginUser, RedirectAttributes redirectAttributes) {
-        try{
-            categoryService.create(loginUser.getUser().getId(), category.getName());
-            redirectAttributes.addFlashAttribute("successMessage", "カテゴリを登録しました。");
-        } catch(IllegalArgumentException e){
-            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-        }
-        return "redirect:/categories";
-    }
 
     // 更新
     @PostMapping("/{id}/update")

@@ -18,27 +18,29 @@ public class CategoryService {
     }
 
     // カテゴリの登録
-    public void create(Long userId, String name){
-        String trimedName = name.trim();
-        if(trimedName.isEmpty()){
+    public void create(User user, String name) {
+        String trimmedName = name.trim();
+
+        if (trimmedName.isEmpty()) {
             throw new IllegalArgumentException("カテゴリ名を入力してください。");
         }
 
-        if(categoryRepository.existsByUserIdAndName(userId, trimedName)){
+        Long userId = user.getId();
+
+        if (categoryRepository.existsByUser_IdAndName(userId, trimmedName)) {
             throw new IllegalArgumentException("同じ名前のカテゴリは既に存在しています。");
-            
         }
 
-        Category category = Category.builder()
-                                    .userId(userId)
-                                    .name(trimedName)
-                                    .build();
+        Category category = new Category();
+        category.setUser(user);
+        category.setName(trimmedName);
+
         categoryRepository.save(category);
     }
 
     // カテゴリの一覧表示・・・ユーザーIDからカテゴを絞り込む
     public List<Category> findAllByUserId(Long userId){
-        return categoryRepository.findAllByUserIdOrderByCreatedAtAsc(userId);
+        return categoryRepository.findAllByUser_IdOrderByCreatedAtAsc(userId);
     }
 
     // カテゴリ更新
@@ -48,10 +50,10 @@ public class CategoryService {
             throw new IllegalArgumentException("カテゴリ名を入力してください。");
         }
 
-        Category category = categoryRepository.findByIdAndUserId(categoryId, userId)
+        Category category = categoryRepository.findByIdAndUser_Id(categoryId, userId)
                                 .orElseThrow(() -> new IllegalArgumentException("カテゴリが見つかりません。"));
 
-        if(!category.getName().equals(trimmedName) && categoryRepository.existsByUserIdAndName(userId,trimmedName)){
+        if(!category.getName().equals(trimmedName) && categoryRepository.existsByUser_IdAndName(userId,trimmedName)){
             throw new IllegalArgumentException("同じカテゴリ名で既に登録されています。");
         }
 
@@ -60,7 +62,7 @@ public class CategoryService {
     }
     // カテゴリ削除
     public void delete(long categoryId, Long userId){
-        Category category = categoryRepository.findByIdAndUserId(categoryId, userId)
+        Category category = categoryRepository.findByIdAndUser_Id(categoryId, userId)
                                 .orElseThrow(() -> new IllegalArgumentException("カテゴリが見つかりません。"));
         categoryRepository.delete(category);
     }

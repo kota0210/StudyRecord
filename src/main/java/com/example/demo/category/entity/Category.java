@@ -2,6 +2,8 @@ package com.example.demo.category.entity;
 
 import java.time.LocalDateTime;
 
+import com.example.demo.user.entity.User;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,7 +28,7 @@ public class Category {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private Long userId;
+    private User user;
 
     public void updateName(String trimmedName) {
         this.name = trimmedName;

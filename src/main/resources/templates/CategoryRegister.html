@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>カテゴリ一覧</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>カテゴリ登録画面</h1>
+        <form th:action="@{/categories}" th:object="${category}" method="post">
+            <!--カテゴリ名 -->
+            <div>
+                <label for="name">カテゴリ名:</label>
+                <input type="text" id="name" name="name" th:field="*{name}">
+            </div>
+
+            <!-- 登録ボタン -->
+            <input type="submit" value="登録">
+        </form>
+
+</body>
+</html>
