@@ -37,7 +37,7 @@ public class StudyRecord {
     private String title;
 
     @Column(name = "study_date", nullable = false)
-    LocalDate studyDate;
+    private LocalDate studyDate;
 
     @Column(name = "duration_minutes", nullable = false)
     private Integer durationMinutes;
@@ -114,12 +114,40 @@ public void setMemo(String memo) {
         this.memo = memo;
     }
 
+    public Long getId() {
+        return this.id;
+    }
+
+    public Category getCategory() {
+        return this.category;
+    }
+
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public User getUser() {
+        return this.user;
     }
 
     public void setUser(User user) {
         this.user = user;
     }
+
+    public LocalDateTime getCreatedAt() {
+    return createdAt;
+}
+
+public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+}
+
+public LocalDateTime getUpdatedAt() {
+    return updatedAt;
+}
+
+public void setUpdatedAt(LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
+}
 
 }

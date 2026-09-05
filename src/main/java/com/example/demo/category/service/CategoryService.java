@@ -1,6 +1,7 @@
 package com.example.demo.category.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -65,6 +66,11 @@ public class CategoryService {
         Category category = categoryRepository.findByIdAndUser_Id(categoryId, userId)
                                 .orElseThrow(() -> new IllegalArgumentException("カテゴリが見つかりません。"));
         categoryRepository.delete(category);
+    }
+
+    // カテゴリの情報の取得
+    public Optional<Category> findById(Long categoryId) {
+        return categoryRepository.findById(categoryId);
     }
 
 }

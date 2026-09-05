@@ -26,7 +26,7 @@
             <td th:text="${studyRecord.content}"></td>
             <td th:text="${studyRecord.studyDate}"></td>
             <td th:text="${studyRecord.durationMinutes}"></td>
-            <td th:text="${studyRecord.category}"></td>
+            <td th:text="${studyRecord.category.name}"></td>
             <!-- ここに編集・削除ボタンを作成する -->
             <td>
                 <a th:href="@{/study-records/{id}/edit(id=${studyRecord.id})}">編集</a>

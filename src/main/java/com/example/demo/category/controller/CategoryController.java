@@ -1,5 +1,8 @@
 package com.example.demo.category.controller;
 
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.category.entity.Category;
@@ -52,6 +56,18 @@ public class CategoryController {
          model.addAttribute("category", new Category());
          return "CategoryRegister";
      }
+
+    //  編集フォーム表示
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Long id, Model model){
+        Optional<Category> categoryOpt = categoryService.findById(id);
+        if (categoryOpt.isEmpty()) {
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "指定されたカテゴリが見つかりませんでした");
+	}
+	    model.addAttribute("category", categoryOpt.get());
+
+	    return "CategoryEdit";
+    }
 
 
     // 更新

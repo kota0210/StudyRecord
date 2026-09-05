@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>カテゴリ編集</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>カテゴリ編集</h1>
+
+<form th:action="@{${category.id == null} ? '/categories' : '/categories/update/' + ${category.id}}"
+      th:object="${category}" method="post">
+
+	<div>
+		<label for="name" class="form-label">カテゴリ名：</label>
+		<input type="text" th:field="*{name}" id="name" class="form-control" />
+
+		<!-- バリデーションエラーメッセージ -->
+		<div th:if="${#fields.hasErrors('name')}" class="text-danger mt-1">
+			<p th:errors="*{name}">カテゴリ名エラー</p>
+		</div>
+	</div>
+
+	<button type="submit" >保存</button>
+</form>
+
+<a th:href="@{/home}">ホームへ移動</a>
+
+</body>
+</html>
