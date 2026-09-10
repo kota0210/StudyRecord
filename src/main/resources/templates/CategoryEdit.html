@@ -8,8 +8,15 @@
 <body>
     <h1>カテゴリ編集</h1>
 
-<form th:action="@{${category.id == null} ? '/categories' : '/categories/update/' + ${category.id}}"
-      th:object="${category}" method="post">
+<p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
+
+<form th:action="@{/categories/update/{id}(id=${category.id})}"
+      th:object="${category}"
+      method="post">
+
+	  <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}">
 
 	<div>
 		<label for="name" class="form-label">カテゴリ名：</label>
@@ -24,7 +31,7 @@
 	<button type="submit" >保存</button>
 </form>
 
-<a th:href="@{/home}">ホームへ移動</a>
+<a th:href="@{/categories}">カテゴリ一覧へ戻る</a>
 
 </body>
 </html>

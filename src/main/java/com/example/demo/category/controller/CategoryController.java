@@ -71,21 +71,36 @@ public class CategoryController {
 
 
     // 更新
-    @PostMapping("/{id}/update")
-    public String update(@PathVariable Long id, @RequestParam String name, @AuthenticationPrincipal LoginUserDetails loginUser, RedirectAttributes redirectAttributes){
-        try{
-            categoryService.update(id, loginUser.getUser().getId(), name);
-            redirectAttributes.addFlashAttribute("successMessage", "カテゴリを更新しました。");
-        }catch(IllegalArgumentException e){
-            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-        }
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable Long id, @RequestParam String name, @AuthenticationPrincipal LoginUserDetails loginUser, Model model,RedirectAttributes redirectAttributes){
 
+
+    try {
+        categoryService.update(id, loginUser.getUser().getId(), name);
+        redirectAttributes.addFlashAttribute("successMessage", "カテゴリを更新しました。");
         return "redirect:/categories";
+
+    } catch (IllegalArgumentException e) {
+        System.out.println("カテゴリ更新エラー: " + e.getMessage());
+
+        Category category = categoryService.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "指定されたカテゴリが見つかりませんでした"));
+
+        category.setName(name);
+
+        model.addAttribute("category", category);
+        model.addAttribute("errorMessage", e.getMessage());
+
+        return "CategoryEdit";
+    }
     }
 
     // 削除
-    @PostMapping("/{id}/delete")
+    @PostMapping("/delete/{id}")
     public String delete(@PathVariable Long id, @AuthenticationPrincipal LoginUserDetails loginUser, RedirectAttributes redirectAttributes){
+        System.out.println("===== カテゴリ削除POSTに到達 =====");
+         System.out.println("id = " + id);
+
         try{
             categoryService.delete(id, loginUser.getUser().getId());
             redirectAttributes.addFlashAttribute("successMessage", "カテゴリを削除しました。");
