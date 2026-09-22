@@ -2,39 +2,58 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>ユーザー登録</title>
+    <title>アカウント作成</title>
 </head>
 <body>
-    <h1>ユーザー登録</h1>
+    <!--ロゴ-->
+    <h1>StudySupport</h1>
 
-    <p th:if="${registerError}" th:text="${registerError}" style="color: red;"></p>
+    <!--サブロゴ-->
+    <p>学びを、つづける力に。</p>
 
-    <form th:action="@{/register}" method="post">
-        <div>
-            <label>メールアドレス</label>
-            <input type="email" name="email" th:value="${email}" required>
+    <!--アカウント作成エリア-->
+    <div class = "register-area">
+
+        <!--アカウント作成エリアのタイトル-->
+        <h1>学習を、積み重ねよう</h1>
+
+        <!--アカウント作成エリアのサブタイトル-->
+        <p>無料アカウントを作成</p>
+
+        <p th:if="${registerError}" th:text="${registerError}" style="color: red;"></p>
+
+        <form th:action="@{/register}" method="post">
+            <div class = "input-area">
+                <label>メールアドレス</label>
+                <input type="email" name="email" th:value="${email}" required>
+            </div>
+
+            <div class = "input-area">
+                <label>名前</label>
+                <input type="text" name="name" th:value="${name}" required>
+            </div>
+
+            <div class = "input-area">
+                <label>パスワード</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <div class = "input-area">
+                <label>パスワード（確認）</label>
+                <input type="password" name="confirmPassword" required>
+            </div>
+
+            <button type="submit">アカウントを作成</button>
+        </form>
+
+        <!-- アカウント持ちの方のためのログインリンク -->
+        <div id = "login-link">
+            <p>アカウントお持ちの方</p>
+            <p>
+                <a th:href="@{/login}">ログイン</a>
+            </p>
         </div>
 
-        <div>
-            <label>名前</label>
-            <input type="text" name="name" th:value="${name}" required>
-        </div>
-
-        <div>
-            <label>パスワード</label>
-            <input type="password" name="password" required>
-        </div>
-
-        <div>
-            <label>パスワード確認</label>
-            <input type="password" name="confirmPassword" required>
-        </div>
-
-        <button type="submit">登録</button>
-    </form>
-
-    <p>
-        <a th:href="@{/login}">ログイン画面へ</a>
-    </p>
+    </div>
 </body>
 </html>
