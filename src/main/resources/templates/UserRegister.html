@@ -5,20 +5,26 @@
     <title>アカウント作成</title>
 </head>
 <body>
-    <!--ロゴ-->
-    <h1>StudySupport</h1>
+    
+    <!--画面上部のロゴ-->
+    <div class = "logo-area">
+        <!--ロゴ-->
+        <div id = "logo">StudySupport</div>
 
-    <!--サブロゴ-->
-    <p>学びを、つづける力に。</p>
+        <!--サブロゴ-->
+        <div id = "sub-logo">学びを、つづける力に。</div>
+    </div>
 
     <!--アカウント作成エリア-->
     <div class = "register-area">
 
+        <div class = "register-top">
         <!--アカウント作成エリアのタイトル-->
         <h1>学習を、積み重ねよう</h1>
 
         <!--アカウント作成エリアのサブタイトル-->
-        <p>無料アカウントを作成</p>
+        <h2>無料アカウントを作成</h2>
+        </div>
 
         <p th:if="${registerError}" th:text="${registerError}" style="color: red;"></p>
 
@@ -48,12 +54,76 @@
 
         <!-- アカウント持ちの方のためのログインリンク -->
         <div id = "login-link">
-            <p>アカウントお持ちの方</p>
-            <p>
-                <a th:href="@{/login}">ログイン</a>
-            </p>
+            <p>アカウントお持ちの方<a th:href="@{/login}">ログイン</a></p>
         </div>
 
     </div>
+
+<style>
+    body {
+    background: #a8bce9;
+    margin: 0 20px;
+    }
+
+    .logo-area {
+    display: flex;
+    justify-content: space-between; /* 均等配置 */
+    align-items: center; /* 縦方向中央揃え */
+    }
+
+    .register-area {
+    background: #FFFFFF;
+    display: flex;
+    text-align: center;
+    flex-direction: column; /* 縦方向に並べる */
+    gap: 10px; /* 要素間の余白 */
+    width: 400px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 20px auto; /* 中央寄せ */
+    border-radius: 15px;
+    }
+
+    #logo{
+         font-family: arial black, sans-serif;
+         font-size: 20px;
+    }
+
+    #sub-logo{
+        font-family: Arial, Helvetica, sans-serif;
+        opacity: 0.60;
+    }
+
+    .register-top {
+        width: 300px;
+        padding: 10px;
+    margin: 20px auto; /* 中央寄せ */
+    display: flex;
+    justify-content: space-between; /* 均等配置 */
+    align-items: center; /* 縦方向中央揃え */
+    }
+
+    label {
+        display: inline-block;
+        width: 200px;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    input[type="email"],
+    input[type="text"],
+    input[type="password"] {
+        width: 300px;       /* 固定幅 */
+        padding: 5px;
+        box-sizing: border-box; /* paddingとborderを含めて幅を計算 */
+    }
+
+    button {
+        display: inline-block;
+        width: 300px;
+        text-align: center;
+        vertical-align: top;
+    }
+</style>
 </body>
 </html>
