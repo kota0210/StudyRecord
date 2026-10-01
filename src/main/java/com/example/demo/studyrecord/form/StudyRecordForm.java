@@ -2,36 +2,35 @@ package com.example.demo.studyrecord.form;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 // 学習記録の編集のためのフォームクラス
 public class StudyRecordForm {
     
-    // タイトル
     @NotBlank(message = "タイトルを入力してください。")
     @Size(max = 50, message = "50文字以内で入力してください。")
     private String title;
 
-    // 内容
     @Size(max = 1000, message = "1000文字以内で入力してください。")
     private String content;
 
-    // 学習日
-    @NotBlank(message = "学習日を入力してください。")
-    @JsonFormat(pattern = "yyyy/MM/dd")
+    @NotNull(message = "学習日を入力してください。")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate studyDate;
 
-    // 学習時間
-    @NotBlank(message = "学習時間を入力してください。")
+    @NotNull(message = "学習時間を入力してください。")
+    @Min(value = 1, message = "学習時間は1分以上で入力してください。")
+    @Max(value = 600, message = "学習時間は600分以内で入力してください。")
     private Integer durationMinutes;
 
-    // カテゴリID
-    @NotBlank(message = "カテゴリを選択してください。")
+    @NotNull(message = "カテゴリを選択してください。")
     private Long categoryId;
-
 
     // タイトルのゲッターとセッター
     public String getTitle(){

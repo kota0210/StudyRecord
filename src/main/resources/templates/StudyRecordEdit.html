@@ -6,36 +6,65 @@
 </head>
 <body>
     <h1>学習記録編集画面</h1>
+
     <a th:href="@{/study-records}">一覧に戻る</a>
-    <form th:action="@{/study-records/edit/{id}(id=${studyRecord.id})}" method="post">
+
+    <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
+
+    <form th:action="@{/study-records/edit/{id}(id=${studyRecordId})}"
+          th:object="${studyRecordForm}"
+          method="post">
+
         <input type="hidden"
                th:name="${_csrf.parameterName}"
                th:value="${_csrf.token}">
 
-        <input type="hidden" th:object="${studyRecord}" th:field="*_method" value="put" />
         <div>
             <label for="title">タイトル:</label>
-            <input type="text" id="title" name="title" th:value="${studyRecord.title}" required />
+            <input type="text" id="title" th:field="*{title}">
+            <p th:if="${#fields.hasErrors('title')}"
+               th:errors="*{title}"
+               style="color: red;"></p>
         </div>
+
         <div>
             <label for="content">学習内容:</label>
-            <textarea id="content" name="content" required th:text="${studyRecord.content}"></textarea>
+            <textarea id="content" th:field="*{content}"></textarea>
+            <p th:if="${#fields.hasErrors('content')}"
+               th:errors="*{content}"
+               style="color: red;"></p>
         </div>
+
         <div>
-            <label for="date">学習日:</label>
-            <input type="date" id="date" name="date" th:value="${studyRecord.date}" required />
+            <label for="studyDate">学習日:</label>
+            <input type="date" id="studyDate" th:field="*{studyDate}">
+            <p th:if="${#fields.hasErrors('studyDate')}"
+               th:errors="*{studyDate}"
+               style="color: red;"></p>
         </div>
+
         <div>
             <label for="durationMinutes">学習時間（分）:</label>
-            <input type="number" id="durationMinutes" name="durationMinutes" th:value="${studyRecord.durationMinutes}" required />
+            <input type="number" id="durationMinutes" th:field="*{durationMinutes}">
+            <p th:if="${#fields.hasErrors('durationMinutes')}"
+               th:errors="*{durationMinutes}"
+               style="color: red;"></p>
         </div>
+
         <div>
-            <label for="category">カテゴリ:</label>
-            <select id="category" name="category">
-                <!-- カテゴリの選択肢をここに追加する -->
-                <option th:each="category : ${categories}" th:value="${category.name}" th:text="${category.name}" th:selected="${category.name == studyRecord.category}"></option>
+            <label for="categoryId">カテゴリ:</label>
+            <select id="categoryId" th:field="*{categoryId}">
+                <option value="">選択してください</option>
+                <option th:each="category : ${categories}"
+                        th:value="${category.id}"
+                        th:text="${category.name}">
+                </option>
             </select>
+            <p th:if="${#fields.hasErrors('categoryId')}"
+               th:errors="*{categoryId}"
+               style="color: red;"></p>
         </div>
+
         <button type="submit">更新</button>
     </form>
 </body>

@@ -29,7 +29,7 @@
             <td th:text="${studyRecord.category.name}"></td>
             <!-- ここに編集・削除ボタンを作成する -->
             <td>
-                <a th:href="@{/study-records/{id}/edit(id=${studyRecord.id})}">編集</a>
+                <a th:href="@{/study-records/edit/{id}(id=${studyRecord.id})}">編集</a>
                 <a th:href="@{/study-records/{id}/delete(id=${studyRecord.id})}" onclick="return confirm('本当に削除しますか？')">削除</a>
             </td>
         </tr>
