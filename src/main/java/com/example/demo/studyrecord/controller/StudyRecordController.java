@@ -14,11 +14,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.category.security.LoginUserDetails;
 import com.example.demo.category.service.CategoryService;
 import com.example.demo.studyrecord.entity.StudyRecord;
+import com.example.demo.studyrecord.form.StudyRecordForm;
 import com.example.demo.studyrecord.service.StudyRecordService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/study-records")
@@ -59,25 +63,56 @@ public class StudyRecordController {
     // 詳細取得
 
     // 編集フォームの表示
-    @GetMapping("/{id}/edit")
-    public String showEditForm(@PathVariable Long id, Model model){
-        Long loginUserId = 1l;
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Long id, @AuthenticationPrincipal LoginUserDetails loginUser, Model model){
+        Long userId = loginUser.getUser().getId();
 
-        StudyRecord studyRecord = studyRecordService.findByIdAndUserId(loginUserId, id);
+    StudyRecord studyRecord = studyRecordService.findByIdAndUserId(userId, id);
 
-        model.addAttribute("studyRecord", studyRecord);
-        
-        return "StudyRecordEdit";
+    StudyRecordForm form = new StudyRecordForm();
+    form.setTitle(studyRecord.getTitle());
+    form.setContent(studyRecord.getContent());
+    form.setStudyDate(studyRecord.getStudyDate());
+    form.setDurationMinutes(studyRecord.getDurationMinutes());
+    form.setCategoryId(studyRecord.getCategory().getId());
+
+    model.addAttribute("studyRecordForm", form);
+    model.addAttribute("studyRecordId", id);
+    model.addAttribute("categories", categoryService.findAllByUserId(userId));
+
+    return "StudyRecordEdit";
     }
 
     /// 更新
-    @PostMapping("/{id}/edit")
-    public String update(@PathVariable Long id, @ModelAttribute StudyRecord studyRecord) {
-        Long loginUserId = 1L;
-        studyRecordService.update(id, studyRecord,  loginUserId);
+    @PostMapping("/edit/{id}")
+    public String update(
+        @PathVariable Long id,
+        @Valid @ModelAttribute("studyRecordForm") StudyRecordForm form,
+        BindingResult bindingResult,
+        @AuthenticationPrincipal LoginUserDetails loginUser,
+        Model model,
+        RedirectAttributes redirectAttributes
+) {
+    Long userId = loginUser.getUser().getId();
 
+    if (bindingResult.hasErrors()) {
+        model.addAttribute("studyRecordId", id);
+        model.addAttribute("categories", categoryService.findAllByUserId(userId));
+        return "StudyRecordEdit";
+    }
+
+    try {
+        studyRecordService.update(id, userId, form);
+        redirectAttributes.addFlashAttribute("successMessage", "学習記録を更新しました。");
         return "redirect:/study-records";
-     }
+
+    } catch (IllegalArgumentException e) {
+        model.addAttribute("studyRecordId", id);
+        model.addAttribute("categories", categoryService.findAllByUserId(userId));
+        model.addAttribute("errorMessage", e.getMessage());
+        return "StudyRecordEdit";
+    }
+}
 
     // // 削除
     @GetMapping("/{id}/delete")

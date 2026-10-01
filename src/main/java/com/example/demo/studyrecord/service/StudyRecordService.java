@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.example.demo.category.entity.Category;
 import com.example.demo.category.repository.CategoryRepository;
 import com.example.demo.studyrecord.entity.StudyRecord;
+import com.example.demo.studyrecord.form.StudyRecordForm;
 import com.example.demo.studyrecord.repository.StudyRecordRepository;
 import com.example.demo.user.entity.User;
 
@@ -53,17 +54,19 @@ public class StudyRecordService {
     }
 
     // 更新・・・学習記録編集画面にて編集した内容をIDにて更新する
-    public StudyRecord update(Long id, StudyRecord editedRecord, Long userId) {
-        StudyRecord studyRecord = studyRecordRepository.findByIdAndUserId(id, userId)
-            .orElseThrow(() -> new IllegalArgumentException("学習記録が見つかりません"));
+    public void update(Long id, Long userId, StudyRecordForm form) {
+    StudyRecord studyRecord = studyRecordRepository.findByIdAndUserId(id, userId)
+            .orElseThrow(() -> new IllegalArgumentException("学習記録が見つかりません。"));
 
-        studyRecord.setStudyDate(editedRecord.getStudyDate());
-        studyRecord.setDurationMinutes(editedRecord.getDurationMinutes());
-        studyRecord.setContent(editedRecord.getContent());
-        studyRecord.setMemo(editedRecord.getMemo());
+    Category category = categoryRepository.findByIdAndUser_Id(form.getCategoryId(), userId)
+            .orElseThrow(() -> new IllegalArgumentException("カテゴリが見つかりません。"));
 
-        return studyRecordRepository.save(studyRecord);
-    }
+    studyRecord.setTitle(form.getTitle());
+    studyRecord.setContent(form.getContent());
+    studyRecord.setStudyDate(form.getStudyDate());
+    studyRecord.setDurationMinutes(form.getDurationMinutes());
+    studyRecord.setCategory(category);
+}
     
     // 削除
     public void delete(@PathVariable Long id, Model model) {
